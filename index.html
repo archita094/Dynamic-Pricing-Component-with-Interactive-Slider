@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Frontend Mentor | Interactive pricing component</title>
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    .popup { 
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="screen">
+  <div class="themebtn">
+    <button class="changebtn">Light Theme</button>
+  </div>
+ <div class="main">
+  <div class="head">
+  <h1 class="heading">Simple, traffic-based pricing</h1>
+  <h2 class="sub-heading">Sign-up for our 30-day trial. No credit card required.</h2>
+</div>
+  <div class="card">
+    <div class="info">
+      <div class="price-block">
+        <h2 class="pageviews">100K Pageviews</h2>
+        <div class="price">
+          <div>$<span id="priceamm">16.00 </span></div>
+          <h2 class="per-month"> /month</h2>
+        </div>
+      </div>
+    </div>
+    <div class="slidemain">
+      <input type="range" min="8" max="36" value="16" class="slider-bar" id="myRange">
+      <div id="selector">
+        <div class="selectbtn"></div>
+      </div>
+    </div>
+    <div class="billing">
+      <h2 class="monthlybilling">Monthly Billing</h2>
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+      <h2 class="yearlybilling">Yearly Billing</h2>
+      <h3 class="discount">25% discount</h3>
+    </div>
+    <hr>
+    <div class="end">
+      <div class="feat"> 
+        <h2 class="features">
+          <img src="images/icon-check.svg" class="icon-check">
+          Unlimited websites
+        </h2>
+        <h2 class="features">
+          <img src="images/icon-check.svg" class="icon-check">
+          100% data ownership
+        </h2>
+        <h2 class="features">
+          <img src="images/icon-check.svg" class="icon-check">
+          Email reports
+        </h2>
+      </div>
+      <button class="trialbtn">Start my trial</button>
+    </div>
+  </div>
+</div>
+<div class="popup">
+  <h2 class="popuptext">Thank you for choosing our service!</h2>
+  <button class="close">Close</button>
+</div>
+<div class="attribution" >
+  Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" class="footer" style="color: aliceblue;">Frontend Mentor</a>. 
+  Coded by <a href="#" class="footer" style="color: aliceblue;" >Archita Srivastava</a>.
+</div>
+</div>
+<script>
+  const slider = document.getElementById("myRange");
+  const priceOutput = document.getElementById("priceamm");
+  const pageviewsOutput = document.querySelector(".pageviews");
+  const billingToggle = document.querySelector(".switch input");
+  const popup = document.querySelector(".popup");
+  const trialBtn = document.querySelector(".trialbtn");
+  const closeBtn = document.querySelector(".close");
+  const pricing = [
+    { views: "10K Pageviews", price: 8 },
+    { views: "50K Pageviews", price: 12 },
+    { views: "100K Pageviews", price: 16 },
+    { views: "500K Pageviews", price: 24 },
+    { views: "1M Pageviews", price: 36 }
+  ];
+
+  slider.min = 1;
+  slider.max = 5;
+  slider.value = 3;
+
+  function updatePricing() {
+    let index = parseInt(slider.value) - 1;
+    let price = pricing[index].price;
+    if (billingToggle.checked) {
+        price *= 0.75;
+    }
+    pageviewsOutput.textContent = pricing[index].views;
+    priceOutput.textContent = price.toFixed(2);
+  }
+
+  slider.addEventListener("input", updatePricing);
+  billingToggle.addEventListener("change", updatePricing);
+  updatePricing();
+
+  // Show popup when trial button is clicked
+  trialBtn.addEventListener("click", function() {
+    popup.style.display = "block";
+  });
+  
+  // Close popup when close button is clicked
+  closeBtn.addEventListener("click", function() {
+    popup.style.display = "none";
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    const themebtn = document.querySelector(".changebtn"); 
+    let isDefaultTheme = true; // Track theme state
+
+    themebtn.addEventListener("click", function () {
+    if (isDefaultTheme) {
+        document.body.style.backgroundImage = "linear-gradient(90deg, #074799, #00c7b9, rgb(249, 217, 158))";
+        document.querySelector(".sub-heading").style.color = "rgba(81, 81, 81, 0.821)";  
+        document.querySelector(".changebtn").textContent="Dark Theme";
+    } else {
+        document.body.style.backgroundImage = "linear-gradient(90deg, #1b313e, #00507e, #ffffba)"; // Default theme
+        document.querySelector(".sub-heading").style.color = "rgba(247, 247, 247, 0.34)";
+        document.querySelector(".changebtn").textContent="Light Theme";
+       
+    }
+    isDefaultTheme = !isDefaultTheme; // Toggle theme state
+});
+   
+  });
+
+
+
+
+</script>
+</body>
+</html>
