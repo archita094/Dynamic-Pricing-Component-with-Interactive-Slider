@@ -300,6 +300,7 @@ transition: ease-in-out 0.1s;
     body {
         margin-top: 20px;
         background-size: 200% 200%;
+        overflow:auto;
     }
 
     .screen {
